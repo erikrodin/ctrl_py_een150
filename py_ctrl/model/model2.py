@@ -58,7 +58,7 @@ def the_model() -> Model:
                         
                         name=f"r1_to_pose_1",
                         precondition= Transition("pre",
-                                                g(f"!r1_robot_run && r1_robot_state == initial && r1_robot_pose != pose_1 && r2_robot_pose != pose_1"),
+                                                g(f"!r1_robot_run && r1_robot_state == initial && r1_robot_pose == above_pose_1 && r1_robot_pose != pose_1 && r2_robot_pose != pose_1"),
                                                 a(f"r1_robot_command = move_j, r1_robot_run, r1_robot_goal_frame = pose_1")),
                         postcondition=Transition("post",
                                                 g(f"r1_robot_state == done"),
@@ -66,11 +66,27 @@ def the_model() -> Model:
                         effects= (),
                         to_run= Transition.default()
             )
+        
+        
+        ops[f"r1_to_above_pose_1"]=Operation(
+                        
+                        name=f"r1_to_above_pose_1",
+                        precondition= Transition("pre",
+                                                g(f"!r1_robot_run && r1_robot_state == initial && r1_robot_pose != above_pose_1"),
+                                                a(f"r1_robot_command = move_j, r1_robot_run, r1_robot_goal_frame = above_pose_1")),
+                        postcondition=Transition("post",
+                                                g(f"r1_robot_state == done"),
+                                                a(f"!r1_robot_run, r1_robot_pose <-above_pose_1")),
+                        effects= (),
+                        to_run= Transition.default()
+            )
+        
+
         ops[f"r1_to_pose_2"]=Operation(
                         
                         name=f"r1_to_pose_2",
                         precondition= Transition("pre",
-                                                g(f"!r1_robot_run && r1_robot_state == initial && r1_robot_pose != pose_2 && r2_robot_pose != pose_2"),
+                                                g(f"!r1_robot_run && r1_robot_state == initial && r1_robot_pose == above_pose_2 && r1_robot_pose != pose_2 && r2_robot_pose != pose_2"),
                                                 a(f"r1_robot_command = move_j, r1_robot_run, r1_robot_goal_frame = pose_2")),
                         postcondition=Transition("post",
                                                 g(f"r1_robot_state == done"),
@@ -78,16 +94,42 @@ def the_model() -> Model:
                         effects= (),
                         to_run= Transition.default()
             )
-    
+        
+        ops[f"r1_to_above_pose_2"]=Operation(
+                        
+                        name=f"r1_to_above_pose_2",
+                        precondition= Transition("pre",
+                                                g(f"!r1_robot_run && r1_robot_state == initial && r1_robot_pose != above_pose_2 && r2_robot_pose != above_pose_2 && r2_robot_pose != pose_2"),
+                                                a(f"r1_robot_command = move_j, r1_robot_run, r1_robot_goal_frame = above_pose_2")),
+                        postcondition=Transition("post",
+                                                g(f"r1_robot_state == done"),
+                                                a(f"!r1_robot_run, r1_robot_pose <-above_pose_2")),
+                        effects= (),
+                        to_run= Transition.default()
+            )
+        
         ops[f"r1_to_buffer"]=Operation(
                         
                         name=f"r1_to_buffer",
                         precondition= Transition("pre",
-                                                g(f"!r1_robot_run && r1_robot_state == initial && r1_robot_pose != r1_buffer"),
+                                                g(f"!r1_robot_run && r1_robot_state == initial && r1_robot_pose == above_r1_buffer && r1_robot_pose != r1_buffer"),
                                                 a(f"r1_robot_command = move_j, r1_robot_run, r1_robot_goal_frame = r1_buffer")),
                         postcondition=Transition("post",
                                                 g(f"r1_robot_state == done"),
                                                 a(f"!r1_robot_run, r1_robot_pose <- r1_buffer")),
+                        effects= (),
+                        to_run= Transition.default()
+            )
+        
+        ops[f"r1_to_above_r1_buffer"]=Operation(
+                        
+                        name=f"r1_to_above_r1_buffer",
+                        precondition= Transition("pre",
+                                                g(f"!r1_robot_run && r1_robot_state == initial && r1_robot_pose != above_r1_buffer"),
+                                                a(f"r1_robot_command = move_j, r1_robot_run, r1_robot_goal_frame = above_r1_buffer")),
+                        postcondition=Transition("post",
+                                                g(f"r1_robot_state == done"),
+                                                a(f"!r1_robot_run, r1_robot_pose <-above_r1_buffer")),
                         effects= (),
                         to_run= Transition.default()
             )
@@ -96,11 +138,24 @@ def the_model() -> Model:
                         
                         name=f"r2_to_pose_2",
                         precondition= Transition("pre",
-                                                g(f"!r2_robot_run && r2_robot_state == initial && r2_robot_pose != pose_2 && r1_robot_pose != pose_2"),
+                                                g(f"!r2_robot_run && r2_robot_state == initial && r2_robot_pose == above_pose_2 && r2_robot_pose != pose_2 && r1_robot_pose != pose_2"),
                                                 a(f"r2_robot_command = move_j, r2_robot_run, r2_robot_goal_frame = pose_2")),
                         postcondition=Transition("post",
                                                 g(f"r2_robot_state == done"),
                                                 a(f"!r2_robot_run, r2_robot_pose <-pose_2")),
+                        effects= (),
+                        to_run= Transition.default()
+            )
+        
+        ops[f"r2_to_above_pose_2"]=Operation(
+                        
+                        name=f"r2_to_above_pose_2",
+                        precondition= Transition("pre",
+                                                g(f"!r2_robot_run && r2_robot_state == initial && r2_robot_pose != above_pose_2 && r1_robot_pose != above_pose_2 && r1_robot_pose != pose_2"),
+                                                a(f"r2_robot_command = move_j, r2_robot_run, r2_robot_goal_frame = above_pose_2")),
+                        postcondition=Transition("post",
+                                                g(f"r2_robot_state == done"),
+                                                a(f"!r2_robot_run, r2_robot_pose <-above_pose_2")),
                         effects= (),
                         to_run= Transition.default()
             )
@@ -110,11 +165,24 @@ def the_model() -> Model:
                         
                         name=f"r2_to_pose_3",
                         precondition= Transition("pre",
-                                                g(f"!r2_robot_run && r2_robot_state == initial && r2_robot_pose != pose_3 && r1_robot_pose != pose_3"),
+                                                g(f"!r2_robot_run && r2_robot_state == initial && r2_robot_pose == above_pose_3 && r2_robot_pose != pose_3 && r1_robot_pose != pose_3"),
                                                 a(f"r2_robot_command = move_j, r2_robot_run, r2_robot_goal_frame = pose_3")),
                         postcondition=Transition("post",
                                                 g(f"r2_robot_state == done"),
                                                 a(f"!r2_robot_run, r2_robot_pose <-pose_3")),
+                        effects= (),
+                        to_run= Transition.default()
+            )
+        
+        ops[f"r2_to_above_pose_3"]=Operation(
+                        
+                        name=f"r2_to_above_pose_3",
+                        precondition= Transition("pre",
+                                                g(f"!r2_robot_run && r2_robot_state == initial && r2_robot_pose != above_pose_3"),
+                                                a(f"r2_robot_command = move_j, r2_robot_run, r2_robot_goal_frame = above_pose_3")),
+                        postcondition=Transition("post",
+                                                g(f"r2_robot_state == done"),
+                                                a(f"!r2_robot_run, r2_robot_pose <-above_pose_3")),
                         effects= (),
                         to_run= Transition.default()
             )
@@ -124,11 +192,24 @@ def the_model() -> Model:
                         
                         name=f"r2_to_buffer",
                         precondition= Transition("pre",
-                                                g(f"!r2_robot_run && r2_robot_state == initial && r2_robot_pose != r2_buffer"),
+                                                g(f"!r2_robot_run && r2_robot_state == initial && r2_robot_pose == above_r2_buffer && r2_robot_pose != r2_buffer"),
                                                 a(f"r2_robot_command = move_j, r2_robot_run, r2_robot_goal_frame = r2_buffer")),
                         postcondition=Transition("post",
                                                 g(f"r2_robot_state == done"),
                                                 a(f"!r2_robot_run, r2_robot_pose <- r2_buffer")),
+                        effects= (),
+                        to_run= Transition.default()
+            )
+        
+        ops[f"r2_to_above_r2_buffer"]=Operation(
+                        
+                        name=f"r2_to_above_r2_buffer",
+                        precondition= Transition("pre",
+                                                g(f"!r2_robot_run && r2_robot_state == initial && r2_robot_pose != above_r2_buffer"),
+                                                a(f"r2_robot_command = move_j, r2_robot_run, r2_robot_goal_frame = above_r2_buffer")),
+                        postcondition=Transition("post",
+                                                g(f"r2_robot_state == done"),
+                                                a(f"!r2_robot_run, r2_robot_pose <-above_r2_buffer")),
                         effects= (),
                         to_run= Transition.default()
             )
@@ -173,30 +254,7 @@ def the_model() -> Model:
                                 to_run=Transition.default()
 
                     )
-                for pos in ["pose_1","pose_2","pose_3","r1_buffer", "r2_buffer"]:
                 
-                        ops[f"op_r1_move_to_above_{pos}"] = Operation(
-                                name = f"op_r1_move_to_above_{pos}",
-                                precondition = Transition("pre", 
-                                g(f"!r1_robot_run && r1_robot_state == initial && r1_robot_pose != above_{pos} && r2_robot_pose != above_{pos}&& r2_robot_pose != {pos}"), 
-                                a(f"r1_robot_command = move_j, r1_robot_run, r1_robot_goal_frame = above_{pos}")),
-                                postcondition = Transition("post", 
-                                g(f"r1_robot_state == done"), 
-                                a(f"!r1_robot_run, r1_robot_pose = above_{pos}")),
-                                effects = (),
-                                to_run = Transition.default()
-                )
-                ops[f"op_r2_move_to_above_{pos}"] = Operation(
-                        name = f"op_r2_move_to_above_{pos}",
-                        precondition = Transition("pre", 
-                        g(f"!r2_robot_run && r2_robot_state == initial && r2_robot_pose != above_{pos} && r1_robot_pose != above_{pos} && r1_robot_pose != {pos}"), 
-                        a(f"r2_robot_command = move_j, r2_robot_run, r2_robot_goal_frame = above_{pos}")),
-                        postcondition = Transition("post", 
-                        g(f"r2_robot_state == done"), 
-                        a(f"!r2_robot_run, r2_robot_pose = above_{pos}")),
-                        effects = (),
-                        to_run = Transition.default()
-                )
 
         transitions: List[Transition] = []
 
@@ -215,4 +273,3 @@ def from_goal_to_goal(state: State) -> Guard:
         return g(goal)
     
     return AlwaysFalse()             
-
